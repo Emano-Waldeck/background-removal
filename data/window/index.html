@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="index.css">
+  <title>Background Removal</title>
+</head>
+<body data-mode="start">
+  <div id="preview">
+    <img id="image">
+    <canvas id="canvas" width="0" height="0"></canvas>
+    <input type="button" value="Download" id="download" disabled>
+  </div>
+  <input type="file" id="file" style="display:none;" accept="image/*">
+  <label id="drag" for="file">
+    <p id="message">Drag & drop the image or click anywhere to upload your image or use this <input type="button" id="sample" value="Sample"> image</p>
+  </label>
+  <script type="module" src="index.js"></script>
+</body>
+</html>
