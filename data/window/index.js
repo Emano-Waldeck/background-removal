@@ -1,3 +1,5 @@
+const WEBGPU_AVAILABLE = typeof navigator < 'u' && 'gpu' in navigator;
+
 const proceed = file => {
   proceed.file = file;
 
@@ -12,7 +14,7 @@ const proceed = file => {
       env.allowLocalModels = true;
       env.localModelPath = new URL('models', location.href).href;
       env.backends.onnx.wasm.wasmPaths = new URL('transformers', location.href).href + '/';
-      env.backends.onnx.wasm.proxy = true;
+      env.backends.onnx.wasm.proxy = false;
       env.backends.onnx.wasm.numThreads = 1;
 
       const oImage = await RawImage.fromBlob(image);
@@ -31,7 +33,7 @@ const proceed = file => {
           model_type: 'custom'
         },
         quantized: false,
-        device: 'webgpu'
+        device: WEBGPU_AVAILABLE ? 'webgpu' : 'wasm'
       });
       const processor = await AutoProcessor.from_pretrained('briaai/RMBG-1.4', {
         config: {
