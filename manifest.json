@@ -1,10 +1,13 @@
 {
   "manifest_version": 3,
-  "version": "0.1.0",
+  "version": "0.1.2",
   "name": "Background Removal",
   "description": "An offline tool to remove the background of an image using WebGPU, transformers and RMBG model",
+  "homepage_url": "https://webextension.org/listing/background-removal.html",
   "offline_enabled": true,
-  "permissions": [],
+  "permissions": [
+    "storage"
+  ],
   "icons": {
      "16": "/data/icons/16.png",
      "32": "/data/icons/32.png",

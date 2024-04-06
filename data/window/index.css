@@ -60,16 +60,13 @@ a:visited {
 
 #preview canvas,
 #preview img {
-  width: 50%;
+  margin: 10px;
+  width: calc(50% - 20px);
   object-fit: contain;
   display: block;
 }
 #preview img:not([src]) {
   opacity: 0;
-}
-#preview img[src] {
-  margin: 10px;
-  width: calc(50% - 20px);
 }
 #download {
   position: absolute;
