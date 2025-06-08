@@ -23,10 +23,11 @@ const proceed = file => {
       canvas.width = width;
       canvas.height = height;
 
+      ctx.fillStyle = '#fff';
       ctx.font = '5vw Arial';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText('Please wait...', width / 2, height / 2);
+      ctx.fillText('Processing...', width / 2, height / 2);
 
       const model = await AutoModel.from_pretrained('briaai/RMBG-1.4', {
         config: {
@@ -68,6 +69,7 @@ const proceed = file => {
       ctx.putImageData(p, 0, 0);
 
       self.download.disabled = false;
+      document.body.dataset.mode = 'done';
     }
     catch (e) {
       console.error(e);
@@ -78,6 +80,7 @@ const proceed = file => {
   };
 
   self.download.disabled = true;
+  document.body.dataset.mode = 'start';
   image.src = typeof file === 'string' ? file : URL.createObjectURL(file);
 };
 
@@ -103,3 +106,42 @@ self.download.onclick = () => {
 };
 
 self.sample.onclick = () => proceed('./samples/input.jpg');
+
+
+let xd = 0;
+self.move.onmousedown = e => {
+  const w = document.documentElement.offsetWidth;
+  xd = e.target.offsetLeft - w / 2;
+
+  const onmousemove = e => {
+    const mw = w / 2 - w / 20;
+    if (e.movementX > 0 && xd + e.movementX > mw) {
+      return;
+    }
+    if (e.movementX < 0 && xd + e.movementX < -1 * mw) {
+      return;
+    }
+    xd += e.movementX;
+
+    document.body.style.setProperty('--offset', xd / w * 100 + '%');
+  };
+  document.addEventListener('mousemove', onmousemove);
+  const onmouseup = e => {
+    document.removeEventListener('mousemove', onmousemove);
+    document.removeEventListener('mouseup', onmouseup);
+    delete document.onmousemove;
+    delete document.onmouseup;
+  };
+  document.addEventListener('mouseup', onmouseup);
+};
+
+// object fit
+chrome.storage.local.get({
+  'object-fit': 'scale-down'
+}).then(prefs => document.getElementById('object-fit').value = prefs['object-fit']);
+document.getElementById('object-fit').onchange = e => {
+  document.body.style.setProperty('--object', e.target.value);
+  chrome.storage.local.set({
+    'object-fit': e.target.value
+  });
+};

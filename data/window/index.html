@@ -8,13 +8,25 @@
 </head>
 <body data-mode="start">
   <div id="preview">
-    <img id="image">
+    <div id="one">
+      <img id="image">
+    </div>
     <canvas id="canvas" width="0" height="0"></canvas>
+  </div>
+  <div id="move"></div>
+  <div id="fixed">
+    <select id="object-fit">
+      <option value="contain">Contain</option>
+      <option value="cover">Cover</option>
+      <option value="fill">Fill</option>
+      <option value="none">None</option>
+      <option value="scale-down">Scale Down</option>
+    </select>
     <input type="button" value="Download" id="download" disabled>
   </div>
   <input type="file" id="file" style="display:none;" accept="image/*">
   <label id="drag" for="file">
-    <p id="message">Drag & drop the image or click anywhere to upload your image or use this <input type="button" id="sample" value="Sample"> image</p>
+    <p id="message"><span>Drag & drop the image or click anywhere to upload your image or use this </span><input type="button" id="sample" value="Sample"> image</p>
   </label>
   <script type="module" src="index.js"></script>
 </body>
